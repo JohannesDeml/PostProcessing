@@ -213,6 +213,9 @@ half4 FragPostBlur(VaryingsDOF i) : SV_Target
                 c3 * 2 + c4 * 4 + c5 * 2 +
                 c6 * 1 + c7 * 2 + c8 * 1;
 
+	return acc/16;
+
+	// Not used
     half aa =
         c0.a * c0.a * 1 + c1.a * c1.a * 2 + c2.a * c2.a * 1 +
         c3.a * c3.a * 2 + c4.a * c4.a * 4 + c5.a * c5.a * 2 +

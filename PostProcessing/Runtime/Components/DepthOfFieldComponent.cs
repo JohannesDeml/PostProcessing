@@ -43,6 +43,7 @@ namespace UnityEngine.PostProcessing
 
         // Height of the 35mm full-frame format (36mm x 24mm)
         const float k_FilmHeight = 0.024f;
+        public float FocusDistance;
 
         float CalculateFocalLength()
         {
@@ -74,7 +75,7 @@ namespace UnityEngine.PostProcessing
             var material = context.materialFactory.Get(k_ShaderString);
             material.shaderKeywords = null;
 
-            var s1 = settings.focusDistance;
+            var s1 = FocusDistance;
             var f = CalculateFocalLength();
             s1 = Mathf.Max(s1, f);
             material.SetFloat(Uniforms._Distance, s1);
@@ -138,6 +139,12 @@ namespace UnityEngine.PostProcessing
 
             context.renderTextureFactory.Release(rt2);
             source.filterMode = FilterMode.Bilinear;
+        }
+
+        public override void OnEnable()
+        {
+            base.OnEnable();
+            FocusDistance = model.settings.focusDistance;
         }
 
         public override void OnDisable()
