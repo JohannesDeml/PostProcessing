@@ -15,6 +15,7 @@ namespace UnityEngine.PostProcessing
     {
         // Inspector fields
         public PostProcessingProfile profile;
+        public DepthTextureMode ExternalDepthTextureModes = DepthTextureMode.None;
 
         // Internal helpers
         Dictionary<Type, KeyValuePair<CameraEvent, CommandBuffer>> m_CommandBuffers;
@@ -44,6 +45,11 @@ namespace UnityEngine.PostProcessing
         GrainComponent m_Grain;
         VignetteComponent m_Vignette;
         FxaaComponent m_Fxaa;
+
+        public void SetDepthOfFieldFocusDistance(float distance)
+        {
+            m_DepthOfField.FocusDistance = distance;
+        }
 
         void OnEnable()
         {
@@ -135,7 +141,8 @@ namespace UnityEngine.PostProcessing
 
             // Find out which camera flags are needed before rendering begins
             // Note that motion vectors will only be available one frame after being enabled
-            var flags = DepthTextureMode.None;
+            var flags = ExternalDepthTextureModes;
+
             foreach (var component in m_Components)
             {
                 if (component.active)
