@@ -52,7 +52,7 @@ namespace UnityEngine.PostProcessing
             var enumerator = m_TemporaryRTs.GetEnumerator();
             while (enumerator.MoveNext())
                 RenderTexture.ReleaseTemporary(enumerator.Current);
-
+			enumerator.Dispose();
             m_TemporaryRTs.Clear();
         }
 
